@@ -1,4 +1,9 @@
 let branches = [];
+let berryChance = 0.05;
+let tripleSplitChance = 0.1;
+let splitChance = 0.2;
+let straightChance = 0.3;
+let deleteChance = 0.1;
 function setup() {
   createCanvas(windowWidth, windowHeight);
   stroke(0, 200, 0);
@@ -12,16 +17,16 @@ function draw() {
   // console.log("length"+ branches.length);
   let branch = branches[branchIndex];
   //console.log("branch" + branch);
-  let rand = random(1000);
+  let rand = random(1);
   if(branches.length == 0 || branch[1] < 0){
     noLoop();
     return;
   }
-  if ( rand < 50 ){
+  if ( rand < berryChance ){
     noStroke();
     circle(branch[0], branch[1], 5);
     stroke(0, 200, 0);
-  }else if ( rand < 100 ){
+  }else if ( rand < berryChance + tripleSplitChance ){
     line(branch[0], branch[1], branch[0]-10, branch[1]-10);
     line(branch[0], branch[1], branch[0], branch[1]-10);
     line(branch[0], branch[1], branch[0]+10, branch[1]-10);
@@ -29,17 +34,17 @@ function draw() {
     branches.push([branch[0], branch[1]-10]);
     branches.push([branch[0]+10, branch[1]-10]);
     branches.splice(branchIndex, 1);
-  }else if ( rand < 200 ){
+  }else if ( rand < berryChance + tripleSplitChance + splitChance ){
     line(branch[0], branch[1], branch[0]-10, branch[1]-10);
     line(branch[0], branch[1], branch[0]+10, branch[1]-10);
     branches.push([branch[0]-10, branch[1]-10]);
     branches.push([branch[0]+10, branch[1]-10]);
     branches.splice(branchIndex, 1);
-  }else if (rand < 900){
+  }else if (rand < berryChance + tripleSplitChance + splitChance + straightChance){
     line(branch[0], branch[1], branch[0], branch[1]-10);
     branches.push([branch[0], branch[1]-10]);
     branches.splice(branchIndex, 1);
-  }else{
+  }else if(berryChance + tripleSplitChance + splitChance + straightChance + deleteChance){
     branches.splice(branchIndex, 1);
   }
 }
